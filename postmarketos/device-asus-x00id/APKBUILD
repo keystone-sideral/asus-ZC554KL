@@ -1,0 +1,31 @@
+# Reference: <https://postmarketos.org/devicepkg>
+pkgname="device-asus-x00id"
+pkgdesc="asus Zenfone 4 max"
+pkgver=0.1
+pkgrel=1
+url="https://postmarketos.org"
+license="MIT"
+arch="aarch64"
+options="!check !archcheck"
+depends="
+	linux-asus-x00id
+	mkbootimg
+	postmarketos-base
+	firmware-asus-x00id
+	mesa-dri-gallium
+	mdss-fb-init-hack 
+"
+makedepends="devicepkg-dev"
+source="deviceinfo"
+
+build() {
+	devicepkg_build $startdir $pkgname
+}
+
+package() {
+	devicepkg_package $startdir $pkgname
+}
+
+sha512sums="
+09a003e4b2c549b8a9314959b8605b790d1391de73ad0aaf31226abd56ed7a3763ef49fc2938ef65150b9833c768fe2cbefd139a192180054eb33a75c6088b52  deviceinfo
+"

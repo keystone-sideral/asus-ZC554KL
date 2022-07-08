@@ -1,0 +1,79 @@
+# Reference: <https://postmarketos.org/vendorkernel>
+# Kernel config based on: arch/arm64/configs/X00I_defconfig)
+
+pkgname="linux-asus-x00id"
+pkgver="3.18.71"
+pkgrel="2"
+pkgdesc="asus Zenfone 4 max kernel fork"
+arch="aarch64"
+_carch="arm64"
+_flavor="asus-x00id"
+url="https://kernel.org"
+license="GPL-2.0-only"
+options="!strip !check !tracedeps pmb:cross-native"
+makedepends="
+	bash
+	bc
+	bison
+	devicepkg-dev
+	flex
+	openssl-dev
+	perl
+	linux-headers
+	elfutils-dev
+	ncurses-dev
+	gmp-dev
+	sed
+	python3
+	gcc6-aarch64
+	gcc6
+	ccache
+	git
+	g++-aarch64
+"
+
+# Source
+_repository="asus-ZC554KL"
+_commit="d0f39faf29d88a3145f64dac4b89187061efcb24"
+_config="config-$_flavor.$arch"
+source="
+	$pkgname-$_commit.tar.gz::https://github.com/keystone-sideral/$_repository/archive/$_commit.tar.gz
+	$_config
+"
+builddir="$srcdir/$_repository-$_commit"
+_outdir="out"
+
+prepare() {
+	export ARCH="arm64"
+	export CROSS_COMPILE="gcc6-aarch64-alpine-linux-musl-"
+	export CC="gcc6-aarch64-alpine-linux-musl-gcc"
+	export HOSTCC="gcc6-gcc"
+	default_prepare
+	. downstreamkernel_prepare
+}
+
+build() {
+	unset LDFLAGS
+	cp drivers/usb/gadget/configfs.h drivers/usb/gadget/function/configfs.h
+	cp drivers/usb/gadget/debug.h drivers/usb/gadget/function/debug.h
+	make O="$_outdir" ARCH="$ARCH" CROSS_COMPILE="gcc6-aarch64-alpine-linux-musl-" CC="gcc6-aarch64-alpine-linux-musl-gcc" HOSTCC="gcc6-gcc"  \
+		KBUILD_BUILD_VERSION="$((pkgrel + 1 ))-postmarketOS"
+}
+
+package() {
+	downstreamkernel_package "$builddir" "$pkgdir" "$_carch" \
+		"$_flavor" "$_outdir"
+	echo "--[ Installing modules ]--"
+	make O="$_outdir" ARCH="$_carch" CROSS_COMPILE="gcc6-aarch64-alpine-linux-musl-" CC="gcc6-aarch64-alpine-linux-musl-gcc" HOSTCC="gcc6-gcc" \
+		KBUILD_BUILD_VERSION="$((pkgrel + 1))-postmarketOS" INSTALL_MOD_PATH="$pkgdir" modules_install
+	
+	#echo "--[ Installing dtb ]--"
+	#_files=
+	#install -D "$builddir/out/arch/arm64/boot/dts/qcom/*.dtb" \
+	#	"$pkgdir/usr/share/dtb/qcom/"
+}
+
+sha512sums="
+8700fdd89b1b1fe8966569e8d6eb132f474fe21aaddb14293c47c2bef6f7760845175a30288468c720fb42f806191cb87211784fc07a7531e9ba433d4f4774c8  linux-asus-x00id-d0f39faf29d88a3145f64dac4b89187061efcb24.tar.gz
+b93e8bb86cb09a67c175eb9c7002ded38082329ccd2dee22999b7a71a00bf45e3c409d82b1b466d579e13261d05d032e7bfca32e60b209ddedfd8e66db4a69f7  config-asus-x00id.aarch64
+"
