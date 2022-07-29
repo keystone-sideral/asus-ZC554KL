@@ -1,21 +1,17 @@
 # Reference: <https://postmarketos.org/devicepkg>
 pkgname="device-asus-x00id"
 pkgdesc="asus Zenfone 4 max"
-pkgver=0.1
-pkgrel=1
+pkgver=0
+pkgrel=2
 url="https://postmarketos.org"
 license="MIT"
 arch="aarch64"
 options="!check !archcheck"
 depends="
-	linux-asus-x00id
-	mkbootimg
-	postmarketos-base
-	firmware-asus-x00id
-	mesa-dri-gallium
-	mdss-fb-init-hack 
-"
+	linux-asus-x00id mkbootimg postmarketos-base mdss-fb-init-hack
+	firmware-asus-x00id mesa-dri-gallium"
 makedepends="devicepkg-dev"
+subpackages="$pkgname-nonfree-firmware:nonfree_firmware"
 source="deviceinfo"
 
 build() {
@@ -26,6 +22,12 @@ package() {
 	devicepkg_package $startdir $pkgname
 }
 
+nonfree_firmware() {
+	pkgdesc="Wi-Fi Firmware"
+	depends="firmware-asus-x00id"
+	mkdir "$subpkgdir"
+}
+
 sha512sums="
-09a003e4b2c549b8a9314959b8605b790d1391de73ad0aaf31226abd56ed7a3763ef49fc2938ef65150b9833c768fe2cbefd139a192180054eb33a75c6088b52  deviceinfo
+23ee4a41ba48f96e141d25720d1a598bd5fe7594a5905b4d96e6749b54c155f95f864cfe1d7f1e919942770d49365df41ab5c8b2c1c369756cd95443f3dfce89  deviceinfo
 "

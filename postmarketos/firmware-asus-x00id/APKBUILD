@@ -1,5 +1,5 @@
 pkgname="firmware-asus-x00id"
-pkgver=0
+pkgver=1
 pkgrel=1
 pkgdesc="Firmware for asus-x00id"
 url="https://github.com/keystone-sideral/asus-x00id-firmware"
@@ -7,211 +7,31 @@ arch="aarch64"
 license="proprietary"
 depends="wcnss-wlan"
 options="!check !strip !archcheck !tracedeps pmb:cross-native"
-_commit="77f1969838872656cfb258302191fb22b73d19dc"
+_commit="0dd93907cd5ce38378288e936e4e319d3692ded2"
 _repo="asus-x00id-firmware"
 _dir="$_repo-$_commit"
 
 source="
 	$pkgname-$_commit.tar.gz::https://github.com/keystone-sideral/$_repo/archive/$_commit.tar.gz
-	https://raw.githubusercontent.com/LineageOS/android_device_asus_msm8937-common/lineage-18.1/wifi/WCNSS_qcom_cfg.ini
 "
+
+_files="wcnss.b00 wcnss.b01 wcnss.b02 wcnss.b04 wcnss.b06  wcnss.b09
+        wcnss.b10 wcnss.b11 wcnss.b12 wcnss.mdt"
+
+_files_prima="WCNSS_cfg.dat WCNSS_wlan_dictionary.dat WCNSS_qcom_cfg.ini WCNSS_qcom_wlan_nv.bin"
+
 
 package() {
 	cd "$srcdir"
-
-	# prima
-	_files="
-		WCNSS_cfg.dat
-		WCNSS_qcom_wlan_nv.bin
-	"
 	for f in $_files; do
-		install -Dm644 "$_dir/etc-firmware/wlan/prima/$f" \
-			"$pkgdir/lib/firmware/postmarketos/wlan/prima/$f"
+		install -Dm644 "$_dir/image/$f" "$pkgdir"/lib/firmware/postmarketos/"$f"
 	done
 
-	# qualcomm
-	_files="
-		adsp.b00
-		adsp.b01
-		adsp.b02
-		adsp.b03
-		adsp.b04
-		adsp.b05
-		adsp.b06
-		adsp.b07
-		adsp.b08
-		adsp.b09
-		adsp.b10
-		adsp.b11
-		adsp.b12
-		adsp.b13
-		adsp.b14
-		adsp.mdt
-		cmnlib.b00
-		cmnlib.b01
-		cmnlib.b02
-		cmnlib.b03
-		cmnlib.b04
-		cmnlib.b05
-		cmnlib.mdt
-		cmnlib64.b00
-		cmnlib64.b01
-		cmnlib64.b02
-		cmnlib64.b03
-		cmnlib64.b04
-		cmnlib64.b05
-		cmnlib64.mdt
-		cpe_9335.b08
-		cpe_9335.b09
-		cpe_9335.b11
-		cpe_9335.b14
-		cpe_9335.b16
-		cpe_9335.b18
-		cpe_9335.b20
-		cpe_9335.b22
-		cpe_9335.b24
-		cpe_9335.b26
-		cpe_9335.b28
-		cpe_9335.b29
-		cpe_9335.mdt
-		cppf.b01
-		cppf.b02
-		cppf.b03
-		cppf.b04
-		cppf.b05
-		cppf.b06
-		cppf.mdt
-		dhsecapp.b00
-		dhsecapp.b01
-		dhsecapp.b02
-		dhsecapp.b03
-		dhsecapp.b04
-		dhsecapp.b05
-		dhsecapp.b06
-		dhsecapp.mdt
-		fingerpr.b00
-		fingerpr.b01
-		fingerpr.b02
-		fingerpr.b03
-		fingerpr.b04
-		fingerpr.b05
-		fingerpr.b06
-		fingerpr.mdt
-		focalfp.b00
-		focalfp.b01
-		focalfp.b02
-		focalfp.b03
-		focalfp.b04
-		focalfp.b05
-		focalfp.b06
-		focalfp.mdt
-		goodixfp.b00
-		goodixfp.b01
-		goodixfp.b02
-		goodixfp.b03
-		goodixfp.b04
-		goodixfp.b05
-		goodixfp.b06
-		goodixfp.mdt
-		gptest.b00
-		gptest.b01
-		gptest.b02
-		gptest.b03
-		gptest.b04
-		gptest.b05
-		gptest.b06
-		gptest.mdt
-		isdbtmm.b00
-		isdbtmm.b01
-		isdbtmm.b02
-		isdbtmm.b03
-		isdbtmm.b04
-		isdbtmm.b05
-		isdbtmm.b06
-		isdbtmm.mdt
-		mba.mbn
-		modem.b00
-		modem.b01
-		modem.b03
-		modem.b05
-		modem.b06
-		modem.b07
-		modem.b08
-		modem.b09
-		modem.b10
-		modem.b11
-		modem.b12
-		modem.b13
-		modem.b17
-		modem.b18
-		modem.b19
-		modem.b20
-		modem.b21
-		modem.b22
-		modem.mdt
-		qmpsecap.b00
-		qmpsecap.b01
-		qmpsecap.b02
-		qmpsecap.b03
-		qmpsecap.b04
-		qmpsecap.b05
-		qmpsecap.b06
-		qmpsecap.mdt
-		securemm.b00
-		securemm.b01
-		securemm.b02
-		securemm.b03
-		securemm.b04
-		securemm.b05
-		securemm.b06
-		securemm.mdt
-		smplap32.b00
-		smplap32.b01
-		smplap32.b02
-		smplap32.b03
-		smplap32.b04
-		smplap32.b05
-		smplap32.b06
-		smplap32.mdt
-		smplap64.b00
-		smplap64.b01
-		smplap64.b02
-		smplap64.b03
-		smplap64.b04
-		smplap64.b05
-		smplap64.b06
-		smplap64.mdt
-		venus.b00
-		venus.b01
-		venus.b02
-		venus.b03
-		venus.b04
-		venus.mdt
-		wcnss.b00
-		wcnss.b01
-		wcnss.b02
-		wcnss.b04
-		wcnss.b06
-		wcnss.b09
-		wcnss.b10
-		wcnss.b11
-		wcnss.b12
-		wcnss.mdt
-		widevine.b00
-		widevine.b01
-		widevine.b02
-		widevine.b03
-		widevine.b04
-		widevine.b05
-		widevine.b06
-		widevine.mdt
-	"
-	for f in $_files; do
-		install -Dm644 "$_dir/firmware/image/$f" \
-			"$pkgdir/lib/firmware/postmarketos/$f"
+	for f in $_files_prima; do
+		install -D -m644 "$_dir/etc-firmware/wlan/prima/$f" "$pkgdir"/lib/firmware/postmarketos/wlan/prima/"$f"
 	done
+
 }
 sha512sums="
-de51a64f9a492193ca7c5bb8218d43fa0c36119ef76a0ada7a9b5e4b10628dea7d59c20aef5260a7f5066e4854e12e43ae147ee8a84c4f8f06610691ee70d361  firmware-asus-x00id-77f1969838872656cfb258302191fb22b73d19dc.tar.gz
-2f8ede762f832051743498639b0c515379d9c686b79d63591e5327321367bfb1c79c3efd6a95f8cf020c3efe10f1f031aaff92b094a4d359633dab1f5de44855  WCNSS_qcom_cfg.ini
+b42228c0b352330017bfe594fb791624eaaa53df03d70a80e33e4b19e11f659981f4212230651f044d5c44b691ae6bed8e3674816f0350a8b5af57034cb86e6e  firmware-asus-x00id-0dd93907cd5ce38378288e936e4e319d3692ded2.tar.gz
 "
