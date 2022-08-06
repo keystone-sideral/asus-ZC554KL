@@ -1,8 +1,9 @@
-![logo_postmarketos](https://upload.wikimedia.org/wikipedia/commons/a/a6/PostmarketOS_logo.svg)
+&#9888; __Be aware it is on beta version and for now, no way to reinstall Android.__ &#9888;  
 # Kernel fork for asus Zenfone 4 Max Plus (ZC554KL)
 This kernel works only on Asus Zenfone 4 Max Plus ZC554KL / x00id.  
 
-This repo contains my effort to port a new device to postmarketos. This allow you to boot a real GNU/Linux on this old phone.
+This repo contains my effort to port a new device to postmarketOS. This allow you to boot a real GNU/Linux on this old phone.
+Do not use this kernel on Android it is only for postmarketOS
 
 Kernel is from Asus Open Source Center with some modifications to build with gcc 6.  
 
@@ -12,11 +13,14 @@ Works :
 * USB (otg works)  
 * Wi-Fi  
 * battery status  
+* bluetooth  
+
 
 Don't work :  
 * ~~Wi-Fi (I am working on it)~~  
 * Modem (Call, SMS ...)  
-* Everything else ...  
+* Sound  
+* Accelerometer, magnetometer, ambient Light, proximity
 
 ![Screenshot](postmarketos/images/Screenshot_20220707_180606-resize.png)
 
