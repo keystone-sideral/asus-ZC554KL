@@ -3,11 +3,11 @@
 This kernel works only on Asus Zenfone 4 Max Plus ZC554KL / x00id.  
 
 This repo contains my effort to port a new device to postmarketOS. This allow you to boot a real GNU/Linux on this old phone.
-Do not use this kernel on Android it is only for postmarketOS
+Do not use this kernel on this phone it is only for postmarketOS
 
 Kernel is from Asus Open Source Center with some modifications to build with gcc 6.  
 
-Works :  
+Work :  
 * Display (don't use 3D driver for now)
 * Touchscreen
 * USB (otg works)  
