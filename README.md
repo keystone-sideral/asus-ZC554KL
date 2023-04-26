@@ -119,7 +119,6 @@ sudo -i
 modprobe wlan  
 echo modprobe wlan > /etc/local.d/wlan.start  
 chmod +x /etc/local.d/wlan.start  
-exit  
 reboot  
 ```  
 
