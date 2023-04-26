@@ -117,8 +117,10 @@ After reboot, connect in user and:
 ```  
 sudo -i  
 modprobe wlan  
-echo wlan > /etc/modules-load.d/wifi.conf
+echo modprobe wlan > /etc/local.d/wlan.start  
+chmod +x /etc/local.d/wlan.start  
 exit  
+reboot  
 ```  
 
 ## How to contribute ?
