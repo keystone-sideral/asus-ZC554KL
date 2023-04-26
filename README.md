@@ -103,14 +103,23 @@ pmbootstrap install
 ```
 (you can open pmbootstrap log in another terminal)  
 reboot to Bootloader by pressing power + vol up again
-```
+```  
 fastboot erase system
 fastboot erase cache
 fastboot erase userdata
 pmbootstrap flasher flash_rootfs --partition userdata  
 pmbootstrap flasher flash_kernel
 fastboot reboot
-```
+```   
+
+7. Wifi:
+After reboot, connect in user and:  
+```  
+sudo -i  
+modprobe wlan  
+echo wlan > /etc/modules-load.d/wifi.conf
+exit  
+```  
 
 ## How to contribute ?
 
