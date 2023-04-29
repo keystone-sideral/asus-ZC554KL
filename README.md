@@ -1,6 +1,6 @@
 &#9888; __Be aware it is on beta version and for now, no way to reinstall Android.__ &#9888;  
 # Kernel fork for asus Zenfone 4 Max Plus (ZC554KL)
-This kernel works only on Asus Zenfone 4 Max Plus ZC554KL / x00id.  
+**This kernel works only on Asus Zenfone 4 Max Plus ZC554KL / x00id 3G RAM / 32G ROM.**   
 
 This repo contains my effort to port a new device to postmarketOS. This allow you to boot a real GNU/Linux on this old phone.
 Do not use this kernel on this phone it is only for postmarketOS
